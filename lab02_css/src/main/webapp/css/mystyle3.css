@@ -34,7 +34,7 @@ body {
 }
 
 #sidebar {
-	background-color: dodgerblue;
+	background: linear-gradient( dodgerblue, #6633FF, #000066);
 	padding: 10px;
 	width: 180px;
 	position: absolute;
@@ -47,14 +47,14 @@ img {
 }
 
 img:hover {
-    -ms-transform: rotate(20deg); /* IE 9 */
-    -moz-transform: rotate(20deg); /* Firefox */
-    -webkit-transform: rotate(20deg); /* Safari */
-    transform: rotate(20degree); /* Standard syntax */
+    -ms-transform: rotate(10deg); /* IE 9 */
+    -moz-transform: rotate(10deg); /* Firefox */
+    -webkit-transform: rotate(10deg); /* Safari */
+    transform: rotate(10degree); /* Standard syntax */
 }
 
 #bottom {
-	background-color: lightgray;
+	background-color: #FFFFCC;
 	text-align: center;
 	padding: 10px;
 	font-size: 80%;
@@ -67,7 +67,8 @@ img:hover {
 
 .menu_item {
 	list-style-type: none;
-	background-color: #f1f1f1;
+	background-color: mediumseagreen;
+	color: white; 
 	border: 1px solid #d4d4d4;
 	padding: 4px;
 	text-align: center;
@@ -75,12 +76,12 @@ img:hover {
 }
 
 .menu_item:hover {
-	background-color: #ffccff;
+	background-color: #6666FF;
 }
 
 .mylink {
 	text-decoration: none;
-	color: #000000;
+	color: white;
 }
 
 .mylink:hover {
@@ -89,8 +90,9 @@ img:hover {
 
 article {
 	border: 1px solid lightgray;
-	border-radius: 8px;
+	border-radius: 8px; /* 숫자가 클수록 원 모양에 가까워짐 */
 	margin: 8px;
+	padding: 10px
 }
 
 img {
