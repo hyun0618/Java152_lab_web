@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+
+#top {
+    font-size: 50px;
+    background: linear-gradient(#CCFFCC, #99FF99, #99FFCC);
+    color: white;
+    text-decoration: none;
+}
+
+.wrap {
+    background-image: url("images_jihyun/IMG_0810.jpg") no repeat center fixed;
+    background-size: cover;
+    height: 100vh;
+}
+
+.menu_bar {
+    with: 100px;
+    margin-top: 20px;    
+}
+
+
+.menu {
+    list-style: none;
+    font-size: 20px;
+    background-color: #00CC66;
+}
+
+
+
+.icon {
+    width: 80px;
+    height: 40px;
+    margin: 10px;
+}
