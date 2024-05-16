@@ -13,7 +13,7 @@
             <input type="number" id="numberInput" placeholder="정수 입력" />
             <button onclick="checkEven()">짝수? 홀수?</button>
             <button onclick="checkPositive()">양수? 음수?</button>
-            <button>삼항연산자</button>
+            <button onclick="checkEven2()">삼항연산자</button>
             <div id="result">결과</div>
         </main>
         
@@ -73,6 +73,15 @@
             	result.innerHTML = 'negative';
             }
         }
+        
+        function checkEven2() {
+        	const number = Number(numberInput.value);
+        	result.innerHTML = (number % 2) ? 'odd number' : 'even number';
+        	// --> 2로 나눈 나머지가 있으면 odd, 없으면 even. 
+        	// (number % 2 === 1) ? 'odd' : 'even';
+            
+        } 
+        
         
         /*
             프로그래밍 언어 종류1:
