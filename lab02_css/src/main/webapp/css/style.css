@@ -1,35 +1,128 @@
 @charset "UTF-8";
 
+body {
+	margin: 5vh 10vw 5vh 10vw;
+}
 
 #top {
-    font-size: 50px;
-    background: linear-gradient(#CCFFCC, #99FF99, #99FFCC);
-    color: white;
-    text-decoration: none;
+      font-size: 50px;
+      font-weight: 550;
+      color: white;
+      text-align: center;
+      margin: 0;
+      min-width: 900px;
+      height: 100px;
+      min-height: 100px;
+      line-height: 100px;
+      background: linear-gradient( #339966, #66CC99);
+      border-radius: 5px;
+      
 }
 
 .wrap {
-    background-image: url("images_jihyun/IMG_0810.jpg") no repeat center fixed;
-    background-size: cover;
-    height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center; 
+	height: 70vh;
+	min-height: 750px;
+	min-width: 800px;
+	
+	
+}
+
+.menu {
+	text-decoration: none;
+	color: #339966;
 }
 
 .menu_bar {
-    with: 100px;
-    margin-top: 20px;    
+	background-color: white;
+	height: 70vh;
+	min-height: 750px;
+	width: 15vw;
+	min-width: 200px;	
+	float: left;
+	border-radius: 5px;
+}
+
+.menu_bar > ul {
+	
+	
+    width: 100%;
+    margin-top: 100px; 
+    margin-left: 30px;
+}
+
+.menu_bar > ul > li {
+	
+	list-style:none;
+	font-size: 30px;
+	font-weight: 550;
+	margin-top: 20px;
+	 	
+}
+
+li {
+	font-size: 20px;
+	padding: auto;
+}
+
+main {
+	background-color: #FFFFCC; /* #f8f9fa; */
+	height: 70vh;
+	min-height: 700px;
+	width: 80vw;
+	min-width: 700px;
+	border-radius: 0px 0px 5px 0px;
+	flex-direction: row;
+	
+}
+
+.first {
+	float: right;
+	align-items: center;
+	font-weight: 600;
+	display: flex;
+ 	flex-direction: column;
+	margin: 150px 200px 50px 20px;
+	flex: 1;
 }
 
 
-.menu {
-    list-style: none;
-    font-size: 20px;
-    background-color: #00CC66;
+.image {
+	flex-shrink: 0;
+	margin-top: 100px;
+	margin-left: 150px;
+	width: auto;
+	height: auto;
+	max-width: 50%;
+	max-height: 100%;
+	border-radius: 5px;
+	flex: 1;
 }
 
 
+
+img {
+	width: 350px;
+	height: 350px;	
+}
+
+.traits {
+	margin-top: 10px;
+}
+
+
+a {
+	color: white;
+	text-decoration: none;
+}
 
 .icon {
     width: 80px;
     height: 40px;
     margin: 10px;
 }
+
+
+
