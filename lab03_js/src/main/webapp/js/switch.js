@@ -10,7 +10,7 @@ const result = document.getElementById('result');
 
 function selectListener() {
     const value = week.value;
-    switch (value) {
+    switch (value) { // break를 만날 때까지 실행. 
         case 'mon':
         case 'tue':
         case 'wed':
