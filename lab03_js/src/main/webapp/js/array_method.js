@@ -49,10 +49,14 @@
  console.log(arr2);
  
  
- // filter, map, reduce:
+ // forEach, filter, map:
  const numbers = [1, 2, 3, 4, 5, 6];
  console.log(numbers);
+  
+ // (1) forEach
+ numbers.forEach((x) => console.log(x));
  
+ // (2)filter
  // 배열 numbers의 원소들 중에서 홀수들로만 이루어진 새로운 배열을 만드세요.
  const odds = []; // let odds = [];
  for (let x of numbers) {
@@ -62,18 +66,18 @@
  }
  console.log(odds);
  
- // (1)filter
- // (1-1)익명 함수.
+ // filtering:
+ // (2-1)익명 함수.
  result = numbers.filter(function (x) {
     return x % 2;
  });
- // (1-2)화살표 함수.
+ // (2-2)화살표 함수.
  result = numbers.filter((x) => x % 2); // x를 2로 나눈 나머지가 있으면 그 값을 필터. (1 = true, 0 = false)
  // 짝수를 필터할 경우는 x % 2 === 0 이라는 조건을 줘야 함. 
  console.log(result);
  
  
- // (2) map
+ // (3) map
  // 배열 numbers의 원소들의 제곱을 원소로 갖는 새로운 배열을 만드세요.
  const squares = [];
  for (let x of numbers) {
@@ -81,9 +85,49 @@
  }
  console.log(squares);
  
+ // mapping:
  result = numbers.map((x) => x * x);
  console.log(result);
  
+ result.forEach((x) => console.log(x));
  
+ // 배열 numbers의 모든 원소들의 합계
+ let sum = 0;
+ for (let value of numbers) {
+    sum += value; // sum = sum + value;
+ }
+ console.log(`sum = ${sum}`);
+
+ // (4) reduce
+ sum = numbers.reduce((acc, cur) => acc + cur, 0); // reduce(callback, initialValue)
+ console.log(`sum = ${sum}`);
  
- // (3) reduce
+ // numbers의 모든 원소들의 곱: 1 x 2 x ... x 5 x 6
+ result = 1;
+ for (let value of numbers) {
+    result = result * value; // result *= value;
+ }
+ console.log(`result = ${result}`);
+ 
+ sum = numbers.reduce((acc,cur) => acc * cur, 1);
+ console.log(`result = ${result}`);
+ 
+ // Exercise
+ // Ex1. numbers의 원소들 중에서 짝수들의 합: 2 + 4 + 6 = 12 (filter, reduce) 
+ result = numbers
+          .filter((x) => x % 2 === 0)
+          .reduce((acc, cur) => acc + cur, 0); // acc 초기값: 0 
+ console.log(`짝수 합 = ${result}`); 
+ 
+ // Ex2. numbers의 원소들의 제곱의 합: 1 + 4 + 9 + 16 + 25 + 36 = 91 (map, reduce)
+ result = numbers
+          .map((x) => x * x)
+          .reduce((acc, cur) => acc + cur, 0);
+ console.log(`제곱 합 = ${result}`);
+ 
+ // numbers의 원소들 중에서 짝수들의 제곱의 합: 4 + 16 + 36 (filter, map, reduce)
+ result = numbers
+          .filter((x) => x % 2 === 0) 
+          .map((x) => x * x)
+          .reduce((acc, cur) => acc + cur, 0);
+ console.log(`짝수 제곱 합 = ${result}`);
