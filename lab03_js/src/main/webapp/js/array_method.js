@@ -49,14 +49,14 @@
  console.log(arr2);
  
  
- // forEach, filter, map:
+ // forEach(), filter(), map(), reduce():
  const numbers = [1, 2, 3, 4, 5, 6];
  console.log(numbers);
   
- // (1) forEach
+ // (1) forEach()
  numbers.forEach((x) => console.log(x));
  
- // (2)filter
+ // (2)filter()
  // 배열 numbers의 원소들 중에서 홀수들로만 이루어진 새로운 배열을 만드세요.
  const odds = []; // let odds = [];
  for (let x of numbers) {
@@ -77,7 +77,7 @@
  console.log(result);
  
  
- // (3) map
+ // (3) map()
  // 배열 numbers의 원소들의 제곱을 원소로 갖는 새로운 배열을 만드세요.
  const squares = [];
  for (let x of numbers) {
@@ -98,7 +98,7 @@
  }
  console.log(`sum = ${sum}`);
 
- // (4) reduce
+ // (4) reduce()
  sum = numbers.reduce((acc, cur) => acc + cur, 0); // reduce(callback, initialValue)
  console.log(`sum = ${sum}`);
  
