@@ -53,6 +53,8 @@ btn3.addEventListener('click', () => { // "function()" ↔ "() =>"
 // ancestor descendent
 // element: pseudo-selector
 
+
+// btn4: querySelector
 const btn4 = document.querySelector('button#btn4');
 btn4.addEventListener('click', function() {
     const div4 = document.querySelector('#id4'); // querySelector('div#id4')
@@ -60,6 +62,8 @@ btn4.addEventListener('click', function() {
     div4.style.backgroundColor = 'lightpink';
 });
 
+
+// btn5: querySelectorAll
 const btn5 = document.querySelector('button#btn5');
 btn5.addEventListener('click', () => {
     const divs = document.querySelectorAll('div.c2'); // --> NodeList(배열과 비슷)를 리턴.
