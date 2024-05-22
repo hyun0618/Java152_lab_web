@@ -1,6 +1,6 @@
-<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.LocalDateTime" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +18,8 @@
             <li><a href="ex2">두번째 서블릿</a></li>
             <li><a href="ex3">포워드(forward)</a></li>
             <li><a href="ex4">리다이렉트(redirect)</a></li>
+            <li><a href="intro.jsp">JSP 소개</a></li>
+            <li><a href="main.jsp">include 지시문</a></li>
         </ul>
     </main>
 </body>
