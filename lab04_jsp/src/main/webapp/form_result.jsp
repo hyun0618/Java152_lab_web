@@ -24,6 +24,7 @@
             textColor = "black";
         }
         %> 
+        
         span#username {
             color: <%= textColor %>;
         }
