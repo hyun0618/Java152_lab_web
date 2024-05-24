@@ -11,6 +11,7 @@
     <header>
         <h1>Contents</h1>
         <h2><%= LocalDateTime.now()%></h2>
+        <h3>Hello, ${ nickname }!</h3>
     </header>
     <main>
         <ul>
@@ -25,6 +26,10 @@
             <li><a href="actiontag.jsp">JSP Action Tag</a></li>
             <li><a href="el.jsp">EL(Expression Language, (표현)식 언어)</a></li>
             <li><a href="jstl.jsp">JSTL</a></li>
+            <li><a href="mvc">MVC</a></li>
+            <li><a href="cookie">Cookie</a></li>
+            <li><a href="session">Session</a></li>
+            
         </ul>
     </main>
 </body>
