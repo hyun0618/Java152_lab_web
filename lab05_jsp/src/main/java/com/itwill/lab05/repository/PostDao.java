@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.itwill.lab05.datasource.DataSourceUtil;
 import com.zaxxer.hikari.HikariDataSource;
 
+// MVC 아키텍처에서 영속성 계층(repository layer)을 담당하는 클래스. 
+// CRUD(Create, Read, Update, Delete) 작업을 담당.
+// DAO(Data Access Object).
 public enum PostDao {
 	INSTANCE;
 	
@@ -22,6 +25,7 @@ public enum PostDao {
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
+			// TODO
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
