@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class PostTest {
 	private static final Logger log = LoggerFactory.getLogger(PostTest.class);
 	
-	private PostDao dao = PostDao.INSTANCE;
+	private PostDao dao = PostDao.INSTANCE; // singleton 객체
 	
 	// JUnit 모듈에서 단위 테스트를 하기 위해서 호출하는 메서드. 
 	// (1) public void. (2) 아규먼트를 갖지 않음.  
@@ -30,13 +30,44 @@ public class PostTest {
 		log.debug("p = {}", p);		
 	}
 	
-	@Test
-	public void testPostDao() {
+//	@Test
+	public void testSelect() {
 		Assertions.assertNotNull(dao); // PostDao 타입 객체가 null이 아니면 단위 테스트 성공.
 		log.debug("dao = {}", dao);
 		
 		List<Post> result = dao.select();
-		Assertions.assertNull(result);
+		Assertions.assertEquals(3, result.size());
+		for (Post p : result) {
+			log.debug(p.toString());
+		}
 	}
-
+	
+//	@Test
+	public void testInsert() {
+		Post post = Post.builder().title("title").content("content").author("author").build();
+		
+		int result = dao.insert(post); // PostDao의 insert 메서드 호출.		
+		Assertions.assertEquals(1, result);
+		// ==> insert 메서드의 리턴 값(삽인된 행의 개수)가 1이면 단위 테스트 성공.	
+	}
+	
+//	@Test
+	public void testDelete() {
+		// PostDao.delete 메서드 단위 테스트 
+		int result = dao.delete(5); // id(PK)가 있는 경우
+        Assertions.assertEquals(1, result);
+        
+        result = dao.delete(4); // id(PK)가 없는 경우
+        Assertions.assertEquals(0, result);
+	}
+	
+	@Test
+	public void testSelectById() {
+		Post post = dao.select(1); // id=1(PK)가 테이블에 있는 경우
+		Assertions.assertNotNull(post);
+		log.debug(post.toString());
+		
+		post = dao.select(0); // id=1(PK)가 테이블에 없는 경우
+		Assertions.assertNull(post);
+	}
 }
