@@ -89,6 +89,7 @@ public enum PostDao {
 		return result;
 	}
 	
+// DELETE
 // posts 테이블에서 id(PK)로 행 1개를 삭제하는 SQL:
 	private static final String SQL_DELETE = "delete from posts where id = ?";
 	
@@ -149,6 +150,37 @@ public enum PostDao {
 		
 		return post;
 	}
+	
+// UPDATE
+	private static final String SQL_UPDATE = 
+			"update posts set title = ?, content = ?, modified_time = systimestamp where id = ?" ;
+	
+	public int update(Post post) {
+		log.debug("update({})", post);
+		log.debug(SQL_UPDATE);
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int result = 0;
+		
+		try {
+			conn = ds.getConnection();
+			stmt = conn.prepareStatement(SQL_UPDATE);
+			stmt.setString(1, post.getTitle());
+			stmt.setString(2, post.getContent());
+			stmt.setInt(3, post.getId());
+			result = stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, stmt);
+		}
+		
+		
+		return result;
+	}
+	
 	
 // fromResultSetToPost
 	private Post fromResultSetToPost(ResultSet rs) throws SQLException {

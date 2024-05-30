@@ -34,6 +34,7 @@ public class PostCreateController extends HttpServlet {
 			.forward(req, resp);
 	}
 	
+	// doPost() 메서드
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
