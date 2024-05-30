@@ -23,21 +23,21 @@
                     <h2>포스트 수정 페이지</h2>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form id="modifyForm">
                         <div class="mt-2">
                             <label for="id" class="form-label">번호</label>
-                            <input id="id" class="form-control" type="text" value="${post.id}" readonly />
+                            <input id="id" class="form-control" type="text" name="id" value="${post.id}" readonly />
                             <%-- ${post.id}는 req.setAttribute("post", post); 에서 가져옴. --%>
                         </div>
                         <div class="mt-2">
                             <label for="title" class="form-label">제목</label>
-                            <input id="title" class="form-control" type="text" value="${post.title}" />
+                            <input id="title" class="form-control" type="text" name="title" value="${post.title}" />
                         </div>
                          <div class="mt-2">
                             <label for="content" class="form-label">내용</label>
-                            <textarea id="content" class="form-control" rows="5">${post.content}</textarea>
+                            <textarea id="content" class="form-control" name="content" rows="5">${post.content}</textarea>
                         </div>
-                        <div class="mt-2">
+                        <div class="mt-2 d-none">
                             <label for="author" class="form-label">작성자</label>
                             <input id="author" class="form-control" type="text" value="${post.author}" readonly />
                         </div>
@@ -52,8 +52,15 @@
         </main>
     </div>
     
+    
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous"></script>
+    
+    <%-- body 끝에서 작성(!순서 중요!) --%>
+    <c:url var="post_modify_js" value="/js/post_modify.js" />
+    <script src="${post_modify_js}"></script>
+    
 </body>
 </html>

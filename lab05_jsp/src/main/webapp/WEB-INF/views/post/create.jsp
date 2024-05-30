@@ -38,8 +38,8 @@
                             type="text" name="author" placeholder="작성자" required /> 
                     </div>
                    
-                    <div class="mt-2 d-flex justify-content-end">
-                        <input class="btn btn-outline-success"  
+                    <div class="mt-2">
+                        <input class="form-control btn btn-success"  
                             type="submit" value="저장" />
                     </div>
                 </form>

@@ -57,6 +57,7 @@
                     </c:url>
                     <a class="btn btn-outline-primary"
                         href="${postModifyPage}">수정하기</a>
+                    
                 </div>
             </div>
         </main>
