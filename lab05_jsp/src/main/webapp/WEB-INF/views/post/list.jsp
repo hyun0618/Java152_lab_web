@@ -14,13 +14,13 @@
 </head>
 <body>
     <div class="container-fluid">
-        <c:set var="pageTitle" value="Post 목록" scope="page" />
+        <c:set var="pageTitle" value="POST" scope="page" />
         <%@ include file="../fragments/header.jspf" %>
         
         <main>
             <div class="card mt-2">
                 <div class="card-header text-center">
-                    <h2>POSTS</h2>
+                    <h2>List</h2>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-hover">
