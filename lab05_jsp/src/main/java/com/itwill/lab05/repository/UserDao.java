@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,39 @@ public enum UserDao {
 	private static final Logger log = LoggerFactory.getLogger(UserDao.class);
 	
 	private final HikariDataSource ds = DataSourceUtil.getInstance().getDataSource();
+	
+	
+	//
+	private static final String SQL_SELECT_USER = 
+			"select * from users where userid = ?";
+	
+	public User selectUser(String userid) {
+		
+		User user = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ds.getConnection();
+			stmt = conn.prepareStatement(SQL_SELECT_USER);
+			stmt.setString(1, userid);
+			rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				user = fromResultSetToUser(rs);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			closeResources(conn, stmt, rs);
+		}
+		return user;
+	}
+	
+	
 	
 	// users 테이블에 insert 하는 SQL 문장, 실행 메서드 작성.
 	private static final String SQL_SIGN_UP = 
@@ -86,11 +121,40 @@ public enum UserDao {
 		} finally {
 			closeResources(conn, stmt, rs);
 		}
-		
+		 
 		
 		return result;
 	}
 	
+	
+// USERS테이블의 POINTS 컬럼 업데이트 --> SQL 문자열, 메서드 추가.
+	private static final String SQL_UPDATE_POINTS = 
+			"update users set points = points + ? where userid = ?";
+	
+	public int updatePoints(String userid, int points) {
+		log.debug("updatePoints(userid={}, points={})", userid, points);
+		
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			conn = ds.getConnection();
+			stmt = conn.prepareStatement(SQL_UPDATE_POINTS);
+			stmt.setInt(1, points);
+			stmt.setString(2, userid);
+			result = stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, stmt);
+		}
+		
+		return result;
+	}
+	
+// fromResultSetToUser()
 	private User fromResultSetToUser(ResultSet rs) throws SQLException {
 		int id = rs.getInt("id");
 		String userid = rs.getString("userid");
@@ -104,7 +168,7 @@ public enum UserDao {
 	}
 	
 
-//
+// closeResources()
 	private void closeResources(Connection conn, Statement stmt, ResultSet rs) {
 		// DB 자원들을 해제하는 순서: 생성된 순서의 반대로. rs --> stmt --> conn
 		try {

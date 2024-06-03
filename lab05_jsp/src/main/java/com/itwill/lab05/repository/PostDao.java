@@ -26,7 +26,8 @@ public enum PostDao {
 	private final HikariDataSource ds = DataSourceUtil.getInstance().getDataSource();
 	
 // select() 메서드에서 실행할 SQL:
-	private static final String SQL_SELECT_ALL = "select * from posts order by id desc";
+	private static final String SQL_SELECT_ALL = 
+			"select * from posts order by id desc";
 
 	public List<Post> select() {
 		log.debug("select()");
@@ -119,7 +120,8 @@ public enum PostDao {
 	}
 	
 // posts 테이블에서 id(PK)로 검색하는 SQL:
-	private static final String SQL_SELECT_BY_ID = "select * from posts where id = ?";
+	private static final String SQL_SELECT_BY_ID 
+		= "select * from posts where id = ?";
 	
 	public Post select(int id) {
 		log.debug("select(id={})", id);
