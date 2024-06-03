@@ -26,10 +26,6 @@ public class PostDetailsController extends HttpServlet {
 			throws ServletException, IOException {
 		log.debug("doGet()");
 		
-		 // 클라이언트의 IP 주소를 가져옴
-        String clientIp = req.getRemoteAddr();
-        log.debug("Client IP: {}", clientIp);
-		
 		// 질의 문자열(query string)에 포함된 요청 파라미터 id 값을 읽음.
 		int id = Integer.parseInt(req.getParameter("id"));
 		log.debug("id={}", id);

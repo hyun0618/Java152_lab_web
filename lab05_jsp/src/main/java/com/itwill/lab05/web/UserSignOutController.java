@@ -27,16 +27,15 @@ public class UserSignOutController extends HttpServlet {
 		// (2) 세션 객체를 무효화(invalidate) - 세션 삭제 
 		// --> '(2)'성립 ==> 자동으로 '(1)'성립. 
 		
-		// (1)
 		HttpSession session = req.getSession();
-		session.removeAttribute("signedInUser"); // --> 'removeAttribute'의 아규먼트: 'setAttribute'의 속성이름
+		session.removeAttribute("signedInUser"); // (1) --> 'removeAttribute'의 아규먼트: 'setAttribute'의 속성이름
 		
-		// (2) 
-		session.invalidate();
+		session.invalidate(); //(2)
 		
 		// 로그아웃 이후에 로그인 페이지로 이동. 
 		String url = req.getContextPath() + "/user/signin";
 		resp.sendRedirect(url);
 		
 	}
+	
 }
