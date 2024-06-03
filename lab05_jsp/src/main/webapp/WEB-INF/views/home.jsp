@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <c:set var="pageTitle" value="Home" scope="page" />
+        <c:set var="pageTitle" value="POST" scope="page" />
         <%-- pageContext.setAttribute("pageTitle", "Home"); --%>
         <%@ include file="./fragments/header.jspf" %>
     
