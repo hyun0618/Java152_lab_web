@@ -37,7 +37,14 @@
                     <li class="nav-item">
                         <c:url var = "signOutPage" value="/user/signout" />
                         <a class="nav-link" href="${signOutPage}">
-                            <span>${signedInUser} </span>로그아웃</a>
+                            <span>${signedInUser} </span> 로그아웃</a>
+                    </li>
+                    
+                    <li>
+                        <c:url var="myPage" value="/user/mypage">
+                            <c:param name="userid" value="${signedInUser}"></c:param>
+                        </c:url>
+                        <a class="nav-link" href="${myPage}">마이페이지</a>
                     </li>
                 </c:if>
                 
@@ -53,6 +60,10 @@
                         <a class="nav-link" href="${signUpPage}">회원가입</a>
                     </li>
                 </c:if>
+                
+            
+                
+                
                 
             </ul>
         </div>
