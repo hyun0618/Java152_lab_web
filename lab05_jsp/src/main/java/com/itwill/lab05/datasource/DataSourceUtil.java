@@ -22,7 +22,7 @@ public class DataSourceUtil {
 		
 		// 데이터 소스 객체 생성. 
 			ds = new HikariDataSource(config);
-		
+			
 	}
 	
 	public static DataSourceUtil getInstance() {
