@@ -24,20 +24,27 @@
                     </div>
                     
                     <div class="card-body">
+                        <c:if test="${not empty param.result && param.result eq 'f'}">
+                            <div class="text-danger">아이디와 패스워드를 확인하세요.</div>
+                        </c:if>
+                    
                         <c:url var="signInPage" value="/user/signin" />
                         <form method="post" action="${ signInPage }">
                         
-                            <div class="mt-2">
-                                
+                            <div class="mt-2">   
                                 <input type="text" name="userid" id="userid" 
                                 placeholder="아이디" class="form-control" required autofocus />
                             </div>
+                            
                             <div class="mt-2">
-                                
                                 <input type="password" name="password" id="password" 
                                 placeholder="비밀번호" class="form-control" required />
                             </div>
                            
+                            <div class="d-none">
+                                <input name="target" value="${param.target}" readonly /> 
+                            </div>
+                            
                             <div class="mt-2">
                                 <input class="form-control btn btn-outline-success" 
                                 type="submit" value="로그인" />
