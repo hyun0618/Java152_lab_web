@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.itwill.lab05.repository.Post;
 import com.itwill.lab05.repository.PostDao;
+import com.itwill.lab05.repository.User;
+import com.itwill.lab05.repository.UserDao;
 
 // MVC 웹 아키텍처에서 Service(Business) 계층을 담당하는 클래스.
 // Persistence(Repository) 계층의 기능을 사용해서(= postDao.select()를 호출해서) 비즈니스 로직을 구현하는 객체.
@@ -18,6 +20,7 @@ public enum PostService {
 	
 	// Persistence(Repository) 계층의 기능(메서드)들을 사용하기 위해서.
 	private final PostDao postDao = PostDao.INSTANCE;
+	private final UserDao userDao = UserDao.INSTANCE;
 	
 	public List<Post> read() {
 		log.debug("read()");
@@ -34,13 +37,17 @@ public enum PostService {
 		int result = postDao.insert(post);
 		log.debug("insert result = {}", result);
 		
-		return result; // insert된 행의 개수를 리턴. 
+		// UserDao 메서드 호출(USERES 테이블의 POINTS 컬럼 업데이트)
+		// 글 작성자에게 10포인트를 줌.
+		userDao.updatePoints(post.getAuthor(), 10);
+	   
+		return result; // 'insert'된 행의 개수를 리턴.
 	}
 	
 	public Post read(int id) {
 		log.debug("read(id={})", id);
 		
-		// 영속성 계층의 메서드를 호출해서 DB 테이블에서 id로 검색하는 SQL을 실행. 
+		// 영속성 계층의 메서드를 호출해서 DB 테이블에서 'id'로 검색하는 SQL을 실행. 
 		Post post = postDao.select(id);
 		log.debug("{}", post);
 		
