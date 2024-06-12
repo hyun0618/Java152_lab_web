@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itwill.spring2.dto.PostCreateDto;
 import com.itwill.spring2.dto.PostListDto;
+import com.itwill.spring2.dto.PostSearchDto;
+import com.itwill.spring2.dto.PostUpdateDto;
 import com.itwill.spring2.repository.Post;
 import com.itwill.spring2.repository.PostDao;
 
@@ -33,28 +36,65 @@ public class PostService {
 		// public PostService(PostDao postDao) { // ==> @RequiredArgsConstructor 애너테이션을 붙이면 자동으로 생성되는 메서드
 		// 		this.postDao = postDao;
 		// }
-	
-	public List<PostListDto> read() {
-		log.debug("read()");
+
+// 리스트
+		public List<PostListDto> read() {
+			log.debug("read()");
 		
-		List<Post> list = postDao.selectOrderByIdDesc();
+			List<Post> list = postDao.selectOrderByIdDesc();
 				
-		return list.stream() 					// stream: list의 원소(x)들을 하나씩 보내는 통로 
+			return list.stream() 					// stream: list의 원소(x)들을 하나씩 보내는 통로 
 				.map(PostListDto::fromEntity) 	// map((x) -> PostListDto.fromEntity(x)) "클래스이름::메서드이름"
 				.toList();
 		
-		// ==> 위의 코드를 반복문으로 표현.
-//		List<PostListDto> result = new ArrayList<>();
-//		for (Post p : list) {
+			// ==> 위의 코드를 반복문으로 표현.
+//			List<PostListDto> result = new ArrayList<>();
+//			for (Post p : list) {
 //			result.add(PostListDto.fromEntity(p));
-//		}
-		
-	}
+		}
 	
-	public Post read(Integer id) {
-		Post post = postDao.selectById(id);
+// 상세보기
+		public Post read(Integer id) {
+			log.debug("read(id={})", id);
 		
-		return post;
-	}
+			return postDao.selectById(id);
+		}
+	
+// 작성
+		public int create(PostCreateDto dto) {
+			log.debug("create({})", dto);
+			
+			int result = postDao.insertPost(dto.toEntity());
+			log.debug("insert 결과 = {}", result);
+			
+			return result;
+		}
+		
+// 삭제
+		public int delete(Integer id) {
+			log.debug("delete(id={})", id);
+			
+			// repository 컴포넌트의 메서드를 호출해서 delete 쿼리를 실행.
+			int result = postDao.deletePost(id);
+			log.debug("delete 결과 = {}", result);
+			
+			return result;
+		}
+
+// 업데이트
+		public int update(PostUpdateDto dto) {
+			int result = postDao.updatePost(dto.toEntity());
+			return result;
+		}
+		
+// 검색
+		public List<PostSearchDto> search(PostSearchDto dto) {
+			List<Post> list = postDao.search(dto);
+			
+			return list.stream() 					
+					.map(PostSearchDto::fromEntity) 	
+					.toList();
+	    }
+
 	
 }
