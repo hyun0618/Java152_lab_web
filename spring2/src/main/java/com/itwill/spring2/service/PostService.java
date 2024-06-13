@@ -88,11 +88,11 @@ public class PostService {
 		}
 		
 // 검색
-		public List<PostSearchDto> search(PostSearchDto dto) {
+		public List<PostListDto> search(PostSearchDto dto) {
 			List<Post> list = postDao.search(dto);
 			
 			return list.stream() 					
-					.map(PostSearchDto::fromEntity) 	
+					.map(PostListDto::fromEntity) 	
 					.toList();
 	    }
 

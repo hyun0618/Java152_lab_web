@@ -22,7 +22,7 @@
     <!-- posts 테이블에서 해당 id의 제목과 내용 업데이트 -->
     <update id="updatePost">
         update posts 
-        set title = #{title}, content = #{content}, modified_Time = systimestamp
+        set title = #{title}, content = #{content}, modified_time = systimestamp
         where id = #{id}
     </update>
     
@@ -30,5 +30,31 @@
     <delete id="deletePost">
         delete from posts where id = #{id}
     </delete>
+    
+    <!-- posts 테이블에서 제목/내용/작성자로 검색. <choose> & <when> 이용 
+        (조건에 따라 SQL 문장이 달라지는 경우: 동적 쿼리)-->
+    <select id="search" resultType="Post">
+        <bind name="searchKeyword" value="'%' + keyword + '%'" /> <!-- searchKeyword에는 '%' + keyword + '%'를 넣어서 묶어라.  -->
+        select * from posts 
+        <where>
+            <choose>
+                <when test='category.equals("t")'>
+                    upper(title) like upper( #{searchKeyword} )
+                </when>
+                <when test='category.equals("c")'>
+                    upper(content) like upper( #{searchKeyword} )
+                </when>
+                <when test='category.equals("tc")'>
+                    upper(title) like upper( #{searchKeyword} )
+                    or
+                    upper(content) like upper( #{searchKeyword} )
+                </when>
+                <when test='category.equals("a")'>
+                    upper(author) like upper( #{searchKeyword} )
+                </when>
+            </choose>
+        </where> 
+        order by id desc
+    </select>
     
 </mapper>

@@ -93,8 +93,11 @@ public class PostController {
 	
 // 검색
 	@GetMapping("/search")
-	public void search(PostSearchDto dto) {
-		postService.search(dto);
+	public String search(PostSearchDto dto, Model model) {
+		List<PostListDto> list = postService.search(dto);
+		model.addAttribute("posts", list);
+		
+		return "post/list";
 	}
 	
 // 리스트
