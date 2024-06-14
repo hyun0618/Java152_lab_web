@@ -20,10 +20,10 @@ public interface CommentDao {
 	// 포스트에 달려 있는 모든 댓글 삭제
 	int deleteByPostId(Integer postId);
 	
-	// TODO: 포스트에 달려 있는 댓글의 개수 검색
+	// 포스트에 달려 있는 댓글의 개수 검색
 	Integer selectCommentCount(Integer postId);
 	
-	// TODO: 댓글 아이디(PK)로 검색
+	// 댓글 아이디(PK)로 검색
 	Comment selectById(Integer id);
 	
 }

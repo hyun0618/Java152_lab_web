@@ -50,7 +50,9 @@ public class PostService {
 			// ==> 위의 코드를 반복문으로 표현.
 //			List<PostListDto> result = new ArrayList<>();
 //			for (Post p : list) {
-//			result.add(PostListDto.fromEntity(p));
+//				result.add(PostListDto.fromEntity(p));
+//			}
+			
 		}
 	
 // 상세보기
