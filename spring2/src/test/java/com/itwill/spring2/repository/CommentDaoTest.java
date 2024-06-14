@@ -31,10 +31,10 @@ public class CommentDaoTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testInsert() {
 		Comment comment = Comment.builder()
-				.postId(46).username("hyun").ctext("헬롱8")
+				.postId(46).username("1234").ctext("Fri")
 				.build();
 		int result = commentDao.insert(comment);
 		Assertions.assertEquals(1, result);
@@ -69,7 +69,7 @@ public class CommentDaoTest {
 		Assertions.assertEquals(7, result); // 포스트아이디 46번인 글에 댓글 개수
 	}
 	
-	@Test
+//	@Test
 	public void testSelectById() {
 		
 		// comments 테이블에 댓글 아이디가 있는 경우
