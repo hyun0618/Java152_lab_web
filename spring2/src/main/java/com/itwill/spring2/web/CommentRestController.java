@@ -94,7 +94,7 @@ public class CommentRestController {
 	}
 	
 	
-// TODO: 댓글 삭제
+// 댓글 삭제
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Integer> deleteComment(@PathVariable int id) {
 		log.debug("deleteComment(id={})", id);

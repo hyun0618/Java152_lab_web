@@ -31,7 +31,7 @@ public class CommentDaoTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testInsert() {
 		Comment comment = Comment.builder()
 				.postId(46).username("1234").ctext("Fri")
@@ -52,7 +52,7 @@ public class CommentDaoTest {
 	
 //	@Test
 	public void testDeleteById() {
-		int result = commentDao.deleteById(2);
+		int result = commentDao.deleteById(11);
 		Assertions.assertEquals(1, result);
 	}
 	

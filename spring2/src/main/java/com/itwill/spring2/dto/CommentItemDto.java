@@ -16,7 +16,7 @@ public class CommentItemDto {
 	private Integer id;
 	private String ctext;
 	private String username;
-	private LocalDateTime modifiedTime;
+	private Timestamp modifiedTime; // --> JS에서 시간/날짜 타입을 표현하기 위해서. 
 	
 	// Comment 타입의 객체를 CommentItemDto 타입 객체로 변환해서 리턴하는 메서드.
 	public static CommentItemDto fromEntity(Comment comment) {
@@ -24,7 +24,7 @@ public class CommentItemDto {
 				.id(comment.getId())
 				.ctext(comment.getCtext())
 				.username(comment.getUsername())
-				.modifiedTime(comment.getModifiedTime())
+				.modifiedTime(Timestamp.valueOf(comment.getModifiedTime()))
 				.build();
 	}
 	
