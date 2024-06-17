@@ -31,15 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnRegisterComment = document.querySelector('button#btnRegisterComment'); // 버튼 찾기
     btnRegisterComment.addEventListener('click', registerComment); // 이벤트 리스너 설정.
 
-    function registerComment() { // 댓글 등록 이벤트 리스너 콜백(함수)
-        // 댓글이 달릴 포스트 번호 찾기.
-        const postId = document.querySelector('input#id').value;
-
-        // 댓글 내용 찾기.
-        const ctext = document.querySelector('textarea#ctext').value;
-
-        // 댓글 작성자 아이디 찾기.         
-        const username = document.querySelector('input#username').value;
+    // 댓글 등록 이벤트 리스너 콜백(함수):
+    function registerComment() { 
+        
+        const postId = document.querySelector('input#id').value; // 댓글이 달릴 포스트 번호 찾기.
+        const ctext = document.querySelector('textarea#ctext').value; // 댓글 내용 찾기.
+        const username = document.querySelector('input#username').value; // 댓글 작성자 아이디 찾기. 
 
         // 댓글 내용, 댓글 작성자가 비어있는지 체크.
         if (ctext === '' || username === '') {
@@ -58,48 +55,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // POST 방식의 Ajax 요청을 보냄. 응답 성공/실패 콜백을 등록. 
         axios
-            .post('../api/comment', data) // 요청주소: "spring2/api/comment"
-            .then((response) => { // responseEntity.ok
-                // console.log(response);     
-                console.log(response.data); // RestController에서 보낸 응답 데이터.
-                if (response.data === 1) { // 댓글 등록의 result가 1이므로
-                    alert('댓글 등록 성공');
-                    document.querySelector('textarea#ctext').value = '';
-                    document.querySelector('input#username').value = '';
-                    // 댓글 목록 갱신
-                    getAllComments();
-                }
-            })
-            .catch((error) => { // responseEntity.error
-                console.log(error);
-            });
+        .post('../api/comment', data) // 요청주소: "spring2/api/comment"
+        .then((response) => { // responseEntity.ok
+            // console.log(response);     
+             console.log(response.data); // RestController에서 보낸 응답 데이터.
+             if (response.data === 1) { // 댓글 등록의 result가 1이므로
+                alert('댓글 등록 성공');
+                document.querySelector('textarea#ctext').value = '';
+                document.querySelector('input#username').value = '';
+                
+                getAllComments(); // 댓글 목록 갱신
+            }
+        })
+        .catch((error) => { // responseEntity.error
+            console.log(error);
+        });
     }
 
-    // 포스트에 달려 있는 모든 댓글 목록 가져오기.
+    // 포스트에 달려 있는 모든 댓글 목록 가져오기. --> postId, uri
     function getAllComments() {
-        // 댓글 목록을 요청하기 위한 포스트 번호
-        const postId = document.querySelector('input#id').value;
-
-        // 댓글 목록을 요청하기 위한 REST API URI
-        const uri = `../api/comment/all/${postId}`;
+        
+        const postId = document.querySelector('input#id').value; // 댓글 목록을 요청하기 위한 포스트 번호
+        const uri = `../api/comment/all/${postId}`; // 댓글 목록을 요청하기 위한 REST API URI
 
         // Ajax 요청을 보냄. 
         axios
-            .get(uri)
-            .then((response) => { // 성공
-                console.log(response.data);
-                // 댓글 목록을 HTML로 작성 --> div#comments 영역에 출력.
-                makeCommentElement(response.data);
-            })
-            .catch((error) => { // 실패
-                console.log(error);
-            });
+        .get(uri)
+        .then((response) => { // 성공
+            console.log(response.data);
+            // 댓글 목록을 HTML로 작성 --> div#comments 영역에 출력.
+            makeCommentElement(response.data);
+        })
+        .catch((error) => { // 실패
+            console.log(error);
+        });
     }
     
     // 댓글 목록(댓글 객체들의 배열)을 아규먼트로 전달받아서 HTML을 작성.
     function makeCommentElement(data) { // data: 배열
-        // 댓글 목록 HTML이 삽입될 div
-        const divComments = document.querySelector('div#comments');
+        
+        const divComments = document.querySelector('div#comments'); // 댓글 목록 HTML이 삽입될 div
         
         // 댓글 목록 HTML 코드
         let htmlStr = '';
@@ -132,14 +127,42 @@ document.addEventListener('DOMContentLoaded', () => {
         // 모든 삭제 버튼을 찾아서 클릭 이벤트 리스너를 설정. 
         const btnDeletes = document.querySelectorAll('button.btnDeleteComment'); // 버튼 찾기.
         for (let btn of btnDeletes) {
-            btn.addEventListener('click', (e) => {
-                alert(e.target.getAttribute('data-id'));
-            });
+            btn.addEventListener('click', deleteComment);
         }
         
-        // 모든 수정 버튼을 찾아서 클릭 이벤트 리스너를 설정.
+        // TODO: 모든 수정 버튼을 찾아서 클릭 이벤트 리스너를 설정.
         
+    }
+    
+    function deleteComment(event) {
+        // 이벤트 리스너 콜백의 아규먼트 event 객체는 target 속성을 가지고 있음. 
+        console.log(event.target); // --> 이벤트가 발생한 요소(target)
         
+        const id = event.target.getAttribute('data-id'); // HTML 요소의 속성 값 찾기
+        
+        // 삭제 여부 확인
+        const result = confirm(`댓글(${id})을 삭제하시겠습니까?`);
+        if (!result) { // 사용자가 [취소]를 선택했을 때.
+            return;
+        }
+        
+        // Ajax 삭제 요청을 보낼 REST API URI
+        const uri = `../api/comment/${id}`;
+        
+        // Ajax 요청을 보냄. 
+        axios
+        .delete(uri)
+        .then((response) => {
+            console.log(response.data);
+            if (response.data === 1) {
+                alert(`댓글(${id}) 삭제 성공`);
+                getAllComments(); // 댓글 목록 갱신
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+            
     }
 
 });
