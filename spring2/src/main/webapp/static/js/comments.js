@@ -30,6 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // 버튼 btnRegisterComment 요소에 이벤트 리스너 등록. 
     const btnRegisterComment = document.querySelector('button#btnRegisterComment'); // 버튼 찾기
     btnRegisterComment.addEventListener('click', registerComment); // 이벤트 리스너 설정.
+    
+    // 부트스트랩 모달(다이얼로그) 객체 생성.
+    const commentModal = new bootstrap.Modal('div#commentModal', {backdrop: true});
+    
+    // 모달의 저장 버튼을 찾고 클릭 이벤트 리스너 설정하기.
+    const btnUpdateComment = document.querySelector('button#btnUpdateComment');
+    btnUpdateComment.addEventListener('click', updateComment);
+    
+    
+    /*------------------------------------------------------------------------------------------------*/
+
 
     // 댓글 등록 이벤트 리스너 콜백(함수):
     function registerComment() { 
@@ -84,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((response) => { // 성공
             console.log(response.data);
             // 댓글 목록을 HTML로 작성 --> div#comments 영역에 출력.
-            makeCommentElement(response.data);
+            makeCommentElements(response.data);
         })
         .catch((error) => { // 실패
             console.log(error);
@@ -92,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // 댓글 목록(댓글 객체들의 배열)을 아규먼트로 전달받아서 HTML을 작성.
-    function makeCommentElement(data) { // data: 배열
+    function makeCommentElements(data) { // data: 배열
         
         const divComments = document.querySelector('div#comments'); // 댓글 목록 HTML이 삽입될 div
         
@@ -130,20 +141,24 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', deleteComment);
         }
         
-        // TODO: 모든 수정 버튼을 찾아서 클릭 이벤트 리스너를 설정.
+        // 모든 수정 버튼을 찾아서 클릭 이벤트 리스너를 설정.
+        const btnModifies = document.querySelectorAll('button.btnModifyComment');
+        for (let btn of btnModifies) {
+            btn.addEventListener('click', showCommentModal);
+        }
         
     }
     
+    // 댓글 삭제 버튼의 클릭 이벤트 리스너 
     function deleteComment(event) {
         // 이벤트 리스너 콜백의 아규먼트 event 객체는 target 속성을 가지고 있음. 
         console.log(event.target); // --> 이벤트가 발생한 요소(target)
-        
         const id = event.target.getAttribute('data-id'); // HTML 요소의 속성 값 찾기
         
         // 삭제 여부 확인
         const result = confirm(`댓글(${id})을 삭제하시겠습니까?`);
         if (!result) { // 사용자가 [취소]를 선택했을 때.
-            return;
+            return; // 함수 종료
         }
         
         // Ajax 삭제 요청을 보낼 REST API URI
@@ -161,8 +176,54 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch((error) => {
             console.log(error);
-        });
-            
+        });       
     }
-
+    
+    // 댓글 수정 버튼의 클릭 이벤트 리스너
+    function showCommentModal(event) {
+        // 이벤트가 발생한 수정 버튼의 data-id 속성 값 읽기. -> 몇번째 댓글을 클릭했는지 알기 위해.
+        const id = event.target.getAttribute('data-id');
+        
+        // Ajax 요청을 보내서 댓글아이디로 검색.
+        const uri = `../api/comment/${id}`;
+        axios
+        .get(uri)
+        .then((response) => {
+            console.log(response.data);
+            
+            // 모달의 input(댓글 번호), textarea(댓글 내용)의 value를 채움.
+            document.querySelector('input#modalCommentId').value = id;
+            document.querySelector('textarea#modalCommentText').value = response.data.ctext;
+            
+            // 모달을 보여줌.
+            commentModal.show();
+            
+        })
+        .catch((error) => console.log(error));   
+    }
+    
+    // 댓글 업데이트 모달의 [저장]버튼의 클릭 이벤트 리스너
+    function updateComment() {
+        // 업데이트 댓글 번호/내용
+        const id = document.querySelector('input#modalCommentId').value;
+        const ctext = document.querySelector('textarea#modalCommentText').value;
+        if (ctext === '') {
+            alert('업데이트할 댓글 내용을 입력하세요.');
+            return; // 이벤트 리스너 종료
+        }
+        
+        // 댓글 업데이트 요청 REST API URI
+        const uri = `../api/comment/${id}`;   
+        
+        // Ajax 요청 
+        axios
+        .put(uri, {ctext}) // {ctext}는 {ctext: ctext}를 간단하게 쓴 형식이다. 
+        .then((response) => {
+            console.log(response);
+            
+            getAllComments(); // 댓글 목록 갱신
+            commentModal.hide(); // 모달 숨김
+        })
+        .catch((error) => console.log(error));
+    }
 });
