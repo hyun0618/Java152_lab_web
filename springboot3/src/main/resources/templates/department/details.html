@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Spring Boot 3</title>
+        <th:block th:replace="~{/layout/fragments :: documentHeader}"></th:block>
     </head>
 	<body>
-        <div th:replace="~{/layout/fragments :: pageHeader('부서 상세 페이지')}"></div>
+        <th:block th:replace="~{/layout/fragments :: pageHeader('부서 상세 정보')}"></th:block>
         
         <main>
             <section>
-                <h2>부서 상세 정보</h2>
-                <table th:object="${department}">
+                <h2 class="mt-2">부서 상세 정보</h2>
+                <table class="table" th:object="${department}">
                     <tr>
                         <th>부서번호</th>
                         <td th:text="*{id}"></td>
@@ -36,6 +35,33 @@
                     </tr>
                 </table>
             </section>
+            <section>
+                <h2>부서 직원 정보</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>사번</th>
+                            <th>이름</th>
+                            <th>전화번호</th>
+                            <th>직책</th>
+                            <th>부서</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="emp : ${department.employees}" th:object="${emp}">
+                        <td th:text="*{id}"></td>
+                        <td>
+                            <a th:href="@{/employee/details/{id}(id=*{id})}" th:text="*{firstName}"></a>
+                        </td>
+                        <td th:text="*{phoneNumber}"></td>
+                        <td th:text="*{job.jobTitle}"></td>
+                        <td th:text="*{department.departmentName}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
         </main>
+        
+        <th:block th:replace="~{/layout/fragments :: bootstrapJS}"></th:block>
 	</body>
 </html>

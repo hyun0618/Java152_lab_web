@@ -2,9 +2,15 @@ package com.itwill.springboot3.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwill.springboot3.domain.Department;
+import com.itwill.springboot3.domain.Employee;
 import com.itwill.springboot3.repository.DepartmentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,13 +23,25 @@ public class DepartmentService {
 
 	private final DepartmentRepository deptRepo;
 	
-	public List<Department> read() {
+	@Transactional(readOnly = true)
+	public Page<Department> read(int pageNo, Sort sort) {	
+		log.info("read()");
 		
-		return deptRepo.findAll();
+		Pageable pageable = PageRequest.of(pageNo, 5, sort);	
+		return deptRepo.findAll(pageable);	
 	}
 	
+	@Transactional(readOnly = true)
 	public Department read(Integer id) {
-		return deptRepo.findById(id).orElseThrow();
+		log.info("read(id={})", id);
 		
+		return deptRepo.findById(id).orElseThrow();		
 	}
+	
+	
+//	
+//	public Department read(Integer id) {
+//		return deptRepo.findById(id).orElseThrow();	
+//	}
+	
 }

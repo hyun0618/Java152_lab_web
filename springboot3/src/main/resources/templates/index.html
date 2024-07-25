@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <th:block th:replace="~{/layout/fragments :: documentHeader}"></th:block>
+    </head>
+    <body>
+        <div th:replace="~{/layout/fragments :: pageHeader('홈 페이지')}"></div>
+        
+        <th:block th:replace="~{/layout/fragments :: bootstrapJS}"></th:block>
+    </body>
+    
+    <!--  
     <head>
         <meta charset="UTF-8">
         <title>Spring Boot 2</title>
     </head>
     <body>
         <div th:replace="~{/layout/fragments :: pageHeader('홈 페이지')}"></div>
-    </body>
+    </body> -->
 </html>

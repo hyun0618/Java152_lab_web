@@ -1,11 +1,16 @@
 package com.itwill.springboot3.domain;
 
+import java.util.List;
+
+import com.itwill.springboot3.dto.EmployeeListItemDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -31,4 +36,9 @@ public class Department {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LOCATION_ID")
 	private Location location;
+	
+	@ToString.Exclude
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department") 
+	private List<Employee> employees;
+	
 }

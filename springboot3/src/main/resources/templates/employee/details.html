@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<meta charset="UTF-8">
-		<title>Spring Boot 3</title>
+		<th:block th:replace="~{/layout/fragments :: documentHeader}"></th:block>
 	</head>
 	<body>
+        <th:block th:replace="~{/layout/fragments :: pageHeader('직원 상세 정보')}"></th:block>
+        
+        <main th:object="${employee}">
+        
+        
+        </main>
+            
+        <th:block th:replace="~{/layout/fragments :: bootstrapJS}"></th:block>
+     
+        <!--  
         <div th:replace="~{/layout/fragments :: pageHeader('직원 상세 페이지')}"></div>
         
         <main>
@@ -12,8 +21,7 @@
                 <tbody th:object="${employee}">
                     <tr>
                         <th>사번</th>
-                        <td th:text="*{id}"></td>
-                    </tr>
+                        <td th:text="*{id}"></td></tr>
                     <tr>
                         <th>이름</th>
                         <td th:text="*{firstName}"></td>
@@ -77,6 +85,6 @@
                     </tr>
                 </tbody>
             </table>
-        </main>
+        </main> -->
     </body>
 </html>
