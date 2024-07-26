@@ -40,6 +40,8 @@ public class EmployeeController {
 //	public String details(@PathVariable Integer id, Model model) {
 //		log.info("details(id={})", id);
 //		
+//		
+//		
 //		// 서비스(비즈니스) 계층의 메서드를 호출해서 직원 상세 정보를 가져옴.
 //		return "employee/details"; // templates 아래 주소 
 //	}
@@ -50,11 +52,11 @@ public class EmployeeController {
 //		model.addAttribute("employees", list);
 //	}
 	
-//	@GetMapping("/details/{id}")
-//	public String details(@PathVariable Integer id, Model model) {
-//		Employee emp = empSvc.read(id);
-//		model.addAttribute("employee", emp);
-//		return "employee/details";
-//	}
+	@GetMapping("/details/{id}")
+	public String details(@PathVariable Integer id, Model model) {
+		Employee emp = empSvc.read(id);
+		model.addAttribute("employee", emp);
+		return "employee/details";
+	}
 	
 }

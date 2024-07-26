@@ -10,12 +10,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor // 기본생성자 
+@AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder
 @Getter @ToString @EqualsAndHashCode // override
 @Entity @Table(name = "EMPLOYEES") // EMPLOYEES 테이블에 맵핑되는 엔터티.
 public class Employee {

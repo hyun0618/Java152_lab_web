@@ -42,6 +42,30 @@
             </div>
         </nav>
     </th:block>
+    
+    <th:block th:fragment="pagination">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"
+                th:classappend="${!page.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?p=${page.number - 1}|}">이전</a>
+            </li>
+            <li class="page-item"
+                th:each="pageNo : ${#numbers.sequence(0, page.totalPages - 1)}"
+                th:if="${pageNo >= page.number - 5 && pageNo < page.number + 5}"
+                th:classappend="${pageNo == page.number} ? 'active'">
+                <a class="page-link"
+                    th:href="@{|?p=${pageNo}|}"
+                    th:text="${pageNo + 1}"></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${!page.hasNext} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?p=${page.number + 1}|}">다음</a>
+                    <!-- th:href="@{|?p=${page.totalPages -1}|}">마지막</a> -->
+            </li>
+        </ul>
+    </th:block>
 
     <th:block th:fragment="bootstrapJS">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
@@ -49,27 +73,4 @@
             crossorigin="anonymous"></script>
     </th:block>
 </body>
-    
-    
-    
-    
-    
-    
-    <!--  
-    <div th:fragment="pageHeader(title)">
-        <header>
-            <h1 th:text="${title}"></h1>
-        </header>
-        <nav>
-            <ul>
-                <li><a th:href="@{/}">홈</a></li>
-                <li><a th:href="@{/employee/list}">직원 목록</a></li>
-                <li><a th:href="@{/department/list}">부서 목록</a></li>
-                <li><a th:href="@{/job/list}">직무 목록</a></li>
-                <li><a th:href="@{/location/list}">위치 목록</a></li>
-                <li><a th:href="@{/country/list}">국가 목록</a></li>
-                <li><a th:href="@{/region/list}">지역 목록</a></li>
-            </ul>
-        </nav>
-    </div> -->
 </html>

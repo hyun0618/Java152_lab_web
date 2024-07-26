@@ -13,7 +13,7 @@ public class EmployeeListItemDto {
 	private Integer employeeId;
     private String employeeName;
     private String phoneNumber;
-    private String jobTitle;
+    private String jobTitle;                                        
     private String departmentName;
     private Integer departmentId;
     
@@ -22,8 +22,7 @@ public class EmployeeListItemDto {
         String jobTitle = (entity.getJob() != null) ?
                 entity.getJob().getJobTitle() : null;
         String deptName = (entity.getDepartment() != null) ?
-                entity.getDepartment().getDepartmentName() : null;
-        
+                entity.getDepartment().getDepartmentName() : null;       
         Integer deptId = (entity.getDepartment().getId() != null) ?
         		entity.getDepartment().getId() : null;
 

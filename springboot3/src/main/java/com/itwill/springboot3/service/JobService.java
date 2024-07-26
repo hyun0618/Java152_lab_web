@@ -17,12 +17,12 @@ public class JobService {
 	
 	private final JobRepository jobRepo;
 	
-	public List<Job> read() {
-		
+	public List<Job> read() {	
 		return jobRepo.findAll();
 	}
 	
-	public Job read(String id) {
-		return jobRepo.findById(id).orElseThrow();
-	}
+//	public Job read(String id) {
+//		return jobRepo.findById(id).orElseThrow();
+//	}
+	
 }
