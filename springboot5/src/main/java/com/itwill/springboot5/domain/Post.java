@@ -12,10 +12,12 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder
+@Setter
 @Getter @ToString(callSuper = true) // 상위 클래스의 toString()을 호출해서 toString() 메서드를 작성. 
 @EqualsAndHashCode(callSuper = true) // 상위 클래스의 필드들도 사용해서 equals(), hashCode() 작성.
 @Entity @Table(name = "POSTS")
