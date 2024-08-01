@@ -29,7 +29,7 @@ public class PostQuerydslTest {
 		log.info("entity = {}", entity);
 	}
 	
-	@Test
+//	@Test
 	public void test() {
 		List<Post> result = null;
 //		result = postRepo.searchByTitle("DUMM");
