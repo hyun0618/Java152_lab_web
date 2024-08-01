@@ -30,7 +30,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, PostQuerydsl 
 	// = findByTitleContainingOrContentContainingAllIgnoreCase(args)
 	@Query("select p from Post p "
 			+ "where upper(p.title) like upper('%' || :keyword || '%') "
-			+ "or upper(p.content) like upper('%' || :keyword || '%')" ) // Post --> 엔터티 클래스 이름
+			+ "or upper(p.content) like upper('%' || :keyword || '%') ") // Post --> 엔터티 클래스 이름
 	Page<Post> findByTitleOrContent(@Param("keyword") String keyword, Pageable pageable);
 	
 	

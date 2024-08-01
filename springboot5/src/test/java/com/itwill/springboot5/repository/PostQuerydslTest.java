@@ -1,5 +1,7 @@
 package com.itwill.springboot5.repository;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,12 +17,26 @@ public class PostQuerydslTest {
 	@Autowired private PostRepository postRepo; 
 	// PostRepository가 PostQuerydsl도 상속받고 있기 때문에 PostRepository에 대한 변수만 설정하면 된다. 
 	
-	@Test
+//	@Test
 	public void testSearchById() {
 		Post entity = postRepo.searchById(2L);
 		log.info("entity = {}", entity);
 	}
 	
-	
+	@Test
+	public void test() {
+		List<Post> result = null;
+//		result = postRepo.searchByTitle("DUMM");
+		result = postRepo.searchByContent("tes");
+		
+		// result 전체 출력. 
+		result.forEach(System.out::println);
+		
+		// result 5개만 출력.
+//		for (int i = 0; i < 5; i++) {
+//			log.info("{}", result.get(i));
+//		}
+		
+	}
 	
 }

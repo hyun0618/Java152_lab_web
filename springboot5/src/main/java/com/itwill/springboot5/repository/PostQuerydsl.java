@@ -1,5 +1,7 @@
 package com.itwill.springboot5.repository;
 
+import java.util.List;
+
 import com.itwill.springboot5.domain.Post;
 
 /*
@@ -23,5 +25,13 @@ import com.itwill.springboot5.domain.Post;
  */
 
 public interface PostQuerydsl {
+	
+	// id가 일치하는 엔터티 검색
 	Post searchById(Long id);
+	
+	// 제목에 포함된 문자열을 대소문자 구분없이 검색
+	List<Post> searchByTitle(String keyword); // --> 인터페이스에서는 메서드 앞에 public abstract 생략.
+	
+	// 내용에 포함된 문자열을 대소문자 구분없이 검색 
+	List<Post> searchByContent(String keyword);
 }

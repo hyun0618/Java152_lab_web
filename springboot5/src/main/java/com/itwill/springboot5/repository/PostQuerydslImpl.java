@@ -1,5 +1,7 @@
 package com.itwill.springboot5.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import com.itwill.springboot5.domain.Post;
@@ -27,4 +29,30 @@ public class PostQuerydslImpl extends QuerydslRepositorySupport implements PostQ
 		
 		return entity;
 	}
+	
+	@Override
+	public List<Post> searchByTitle(String keyword) {
+		log.info("searchByTitle(keyword={})", keyword);
+		
+		QPost post = QPost.post;
+		JPQLQuery<Post> query = from(post); // ==> select p from Post
+		query.where(post.title.containsIgnoreCase(keyword)); // where 절 
+		query.orderBy(post.modifiedTime.desc()); // ==> order by 절 
+			
+		List<Post> result = query.fetch();
+		
+		return result;
+	}
+	
+	@Override
+	public List<Post> searchByContent(String keyword) {
+		
+		QPost post = QPost.post;
+		JPQLQuery<Post> query = from(post)
+				.where(post.content.containsIgnoreCase(keyword))
+				.orderBy(post.modifiedTime.desc());
+		
+		return query.fetch();
+	}
+	
 }
