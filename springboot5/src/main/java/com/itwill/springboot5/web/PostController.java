@@ -33,11 +33,16 @@ public class PostController {
 	
 	@GetMapping("/list")
     public void list(@RequestParam(name = "p", defaultValue = "0") int pageNo, Model model) {
-        log.info("list(pageNo={})", pageNo);       
+        log.info("list(pageNo={})", pageNo);      
+        
         // 서비스 계층의 메서드를 호출 -> 뷰에 포스트 목록 전달
         Page<PostListItemDto> list = postSvc.read(pageNo, Sort.by("modifiedTime").descending());
         model.addAttribute("page", list);
-    }
+        
+        // pagination fragment에서 사용하기 위한 현재 요청 주소 정보
+        model.addAttribute("baseUrl", "/post/list");
+        
+	}
 	
 //	@GetMapping("/list")
 //	public void list(Model model) {		
@@ -102,6 +107,7 @@ public class PostController {
 	
 	// 클라이언트가 Dispatcher Servlet에 요청.(req.getParameter)
 	// Dispatcher Servlet이 컨트롤러의 메서드를 호출.(아규먼트 전달)
+	
 //	@GetMapping("/search")  
 //	public String search(PostSearchRequestDto dto, Model model) {
 //		log.info("search(dto={})", dto);
@@ -121,26 +127,13 @@ public class PostController {
 	@GetMapping("/search")
     public String search(PostSearchRequestDto dto, Model model) {
         log.info("search(dto={})", dto);
-
-        try {
-            if (dto.getCategory() != null) {
-                dto.setCategory(URLDecoder.decode(dto.getCategory(), "UTF-8"));
-            }
-            if (dto.getKeyword() != null) {
-                dto.setKeyword(URLDecoder.decode(dto.getKeyword(), "UTF-8"));
-            }
-        } catch (UnsupportedEncodingException e) {
-            log.error("Error decoding search parameters", e);
-        }
-
+        
         Page<PostListItemDto> result = postSvc.search(dto, Sort.by("modifiedTime").descending());
-        model.addAttribute("posts", result.getContent());
         model.addAttribute("page", result);
-
-        // 검색 파라미터를 모델에 추가하여 페이지네이션에서 유지되도록 함
-        model.addAttribute("category", dto.getCategory());
-        model.addAttribute("keyword", dto.getKeyword());
-
+        
+        // pagination fragment에서 사용할 현재 요청 주소 정보
+        model.addAttribute("baseUrl", "/post/search");
+        
         return "post/list";
     }
 
