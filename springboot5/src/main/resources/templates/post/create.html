@@ -7,8 +7,14 @@
 		<th:block th:replace="~{/layout/fragments::pageHeader('포스트 작성 페이지')}"></th:block>
         
         <main class="mt-2">
-            <div class="card">
+            <div class="container">
+            <div class="mt-4 card">
+                
+                <div class="card-header">
+                    <h2>새 글 작성</h2>
+                </div>
                 <div class="card-body">
+                
                     <form method="post" th:action="@{/post/create}">
                         <div class="mt-2">
                             <label class="form-label" for="title">제목</label>
@@ -25,12 +31,14 @@
                             <input class="form-control" type="text" 
                                 id="author" name="author" required />
                         </div>
-                        <div class="mt-2"> 
-                            <input class="form-control btn btn-outline-success" 
-                                type="submit" value="작성완료">   
+                        <div class="mt-4 d-flex justify-content-end"> 
+                            <input class="btn btn-outline-success" 
+                                type="submit" value="저장">   
                         </div>  
                     </form>            
+                
                 </div>
+            </div>
             </div> 
         </main>
         
