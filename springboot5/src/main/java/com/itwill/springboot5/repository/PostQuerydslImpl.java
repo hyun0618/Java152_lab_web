@@ -14,7 +14,7 @@ public class PostQuerydslImpl extends QuerydslRepositorySupport implements PostQ
 	public PostQuerydslImpl() { 
 		super(Post.class);
 	}
-	// --> 기본생성자를 갖고 잊지 않아서 명시적으로 호출하고 엔터티 클래스를 아규먼트로 줌. 
+	// --> QuerydslRepositorySupport가 기본생성자를 갖고 있지 않아서 명시적으로 호출하고 엔터티 클래스를 아규먼트로 줌. 
 
 	@Override
 	public Post searchById(Long id) {
