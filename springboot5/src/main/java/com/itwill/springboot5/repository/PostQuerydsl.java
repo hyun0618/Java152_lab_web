@@ -3,7 +3,11 @@ package com.itwill.springboot5.repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.itwill.springboot5.domain.Post;
+import com.itwill.springboot5.dto.PostSearchRequestDto;
 
 /*
  * Querydsl 사용:
@@ -41,5 +45,18 @@ public interface PostQuerydsl {
 	
 	// 수정 시간을 범위로 검색: where modified_time between ? and ?
 	List<Post> searchByModifiedTime(LocalDateTime from, LocalDateTime to);
+	
+	// 작성자와 제목으로 검색: where author = ? and lower(title) like ?
+	List<Post> searchByAuthorAndTitle(String author, String title);
+	
+	// 제목/내용/제목+내용/작성자 검색
+	List<Post> searchByCategory(PostSearchRequestDto dto);
+	
+	// 제목 또는 내용에 검색어들 중 한 개라도 포함되어 있는 레코드들을 검색
+	List<Post> searchByKeywords(String[] keywords);
+	
+	// Paging 처리
+	Page<Post> searchByKeywords(String[] keywords, Pageable pageable);
+	
 	
 }
