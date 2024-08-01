@@ -1,5 +1,6 @@
 package com.itwill.springboot5.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,9 @@ public class PostQuerydslTest {
 	public void test() {
 		List<Post> result = null;
 //		result = postRepo.searchByTitle("DUMM");
-		result = postRepo.searchByContent("tes");
+//		result = postRepo.searchByContent("tes");
+//		result = postRepo.searchByTitleOrContent("tes");
+		result = postRepo.searchByModifiedTime(LocalDateTime.of(2024, 7, 29, 12, 0), LocalDateTime.of(2024, 7, 30, 12, 0));
 		
 		// result 전체 출력. 
 		result.forEach(System.out::println);
