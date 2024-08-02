@@ -5,6 +5,9 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
     
+    let currentPageNo = 0; // 현재 페이지 번호.
+    let totalPages = 0; // 댓글 목록 전체 페이지 수.
+    
     // bootstrap 라이브러리의 Collapse 객체를 생성: 
     const bsCollapse = new bootstrap.Collapse('div#collapseComments', {toggle: false});
     
@@ -16,8 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const toggle = btnToggle.getAttribute('data-toggle');
         if(toggle === 'collapse') { // '===' : 변수의 데이터 타입까지 비교
+            
+            
             btnToggle.innerHTML = '댓글 감추기';
             btnToggle.setAttribute('data-toggle', 'unfold');
+            
+            // 댓글 목록 불러오기 
+            getAllComments(0);
+            
         } else {
             btnToggle.innerHTML = '댓글 보기';
             btnToggle.setAttribute('data-toggle', 'collapse');
@@ -74,6 +83,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             })
             .catch((error) => console.log(error));
+    }
+    
+    function getAllComments(pageNo) {
+        // 댓글들이 달린 포스트 아이디:
+        const postId = document.querySelector('input#id').value;
+        
+        // Ajax 요청을 보낼 주소:
+        // path variable: 댓글이 달린 포스트 아이디. request param: 페이지 번호. 
+        const uri = `/api/comment/all/${postId}?p=${pageNo}`;
+        
+        // Ajax 요청을 보내고, 성공/실패 콜백 설정:
+        axios.get(uri)
+            .then((response) => {
+                console.log(response);
+                // TODO: 댓글 목록을 HTML로 작성
+            })
+            .catch((error) => console.log(error));
+    
     }
     
 });
