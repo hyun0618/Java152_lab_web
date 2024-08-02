@@ -1,10 +1,15 @@
 package com.itwill.springboot5.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,6 +40,9 @@ public class Post extends BaseTimeEntity {
 	
 	@Basic(optional = false)
 	private String author;
+	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Comment> comments;
 
 	// update 기능(제목/내용 수정)에서 사용할 공개 메서드
 	public Post update(String title, String content) {

@@ -19,7 +19,8 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder
-@Getter @ToString @EqualsAndHashCode(callSuper = true)
+@Getter @ToString(callSuper = true) // --> log.info("save 결과: {}", entity); 에서 시간 출력.
+@EqualsAndHashCode(callSuper = true)
 @Entity @Table(name = "COMMENTS")
 public class Comment extends BaseTimeEntity {
 	
