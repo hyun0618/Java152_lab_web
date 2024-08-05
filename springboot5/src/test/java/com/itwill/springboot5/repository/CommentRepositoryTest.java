@@ -48,12 +48,12 @@ public class CommentRepositoryTest {
 	}
 	
 //	@Test
-	public void testUpdate() {
-		Comment entity = commentRepo.findById(4L).orElseThrow();
-		
-		entity.update("comment6", "test6");
-		entity = commentRepo.save(entity);
-	}
+//	public void testUpdate() {
+//		Comment entity = commentRepo.findById(4L).orElseThrow();
+//		
+//		entity.update("comment6", "test6");
+//		entity = commentRepo.save(entity);
+//	}
 	
 //	@Test
 	public void testDelete() {

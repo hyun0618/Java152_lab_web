@@ -4,9 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommentRegisterDto {
-	
-	private Long postId;
-	private String ctext;
-	private String writer;
-	
+    private Long postId;
+    private String ctext;
+    private String writer;
 }

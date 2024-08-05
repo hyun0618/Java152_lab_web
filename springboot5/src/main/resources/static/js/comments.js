@@ -3,6 +3,7 @@
  * /post/details.html에 포함.
  * 댓글 생성, 목록, 수정, 삭제. 
  */
+
 document.addEventListener('DOMContentLoaded', () => { 
     let currentPageNo = 0; // 현재 댓글 목록의 페이지 번호
     // --> getAllComments() 함수에서 Ajax 요청을 보내고, 정상 응답이 오면 현재 페이지 번호가 바뀜
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnMoreComments.addEventListener('click', () => getAllComments(currentPageNo + 1));
     
     
-    //------------------------------ 함수 정의(선언) ------------------------------
+    //---------------------------------------- 함수 정의(선언) ----------------------------------------
     function registerComment() {
         // 댓글이 달린 포스트의 아이디
         const postId = document.querySelector('input#id').value; // --> 문자열. 숫자로 변환하려면 함수 이용.
@@ -71,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ajax POST 방식 요청을 보내고, 응답/에러 처리 콜백 등록.
         axios.post('/api/comment', data)
             .then((response) => {
-                
                 console.log(response.data);
                 alert('댓글이 등록되었습니다.');
                 
@@ -118,12 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="text-secondary">${comment.modifiedTime}</span>
                 </div>
                 <div class="mt-2">
-                    <div class="mt-2">
-                        <textarea class="form-control">${comment.ctext}</textarea>
-                    </div>
-                    <div class="mt-2">
-                        <button class="btnDelete btn btn-outline-danger">삭제</button>
-                        <button class="btnUpdate btn btn-outline-primary">수정</button>
+                    <div class="row"> 
+                        <div class="mt-2 col-9">
+                            <textarea class="form-control">${comment.ctext} </textarea> 
+                        </div>
+                        <div class="mt-2 col-3">
+                            <button class="btnDelete btn btn-outline-danger btn-sm" data-id="${comment.id}">삭제</button>
+                            <button class="mx-2 btnUpdate btn btn-outline-primary btn-sm" data-id="${comment.id}">수정</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,6 +140,42 @@ document.addEventListener('DOMContentLoaded', () => {
             divComments.innerHTML += htmlStr;
         }
         
+        // 댓글 [삭제], [수정] 버튼들의 이벤트 리스너는 버튼들이 생겨난 이후에 등록!!
+        // 댓글 [삭제] ==> 모든 button.btnDelete 버튼들을 찾아서 클릭 이벤트 리스너를 등록. 
+        const btnDeletes = document.querySelectorAll('button.btnDelete');
+        btnDeletes.forEach((btn) => {  // 배열의 원소들을 순서대로 아규먼트로 전달.
+            btn.addEventListener('click', deleteComment);
+        }); 
+        
+        // 댓글 [수정]
+        const btnUpdates = document.querySelectorAll('button.btnUpdate');
+        btnUpdates.forEach((btn) => {
+           btn.addEventListener('click', updateComment); 
+        });
+        
+        
+    }
+    
+    function deleteComment(event) {
+//        console.log(event);
+//        console.log(event.target);
+        if (!confirm('정말 삭제할까요?')) { // '취소' ==> true
+            return;
+        }
+        
+        const id = event.target.getAttribute('data-id');
+        const uri = `/api/comment/${id}`; // 삭제 Ajax 요청을 보낼 주소
+        axios.delete(uri)
+            .then((response) => {
+                console.log(response);
+                alert(`댓글 #${id}이 삭제되었습니다.`);
+                getAllComments(0); // 댓글 목록 갱신
+            })
+            .catch((error) => console.log(error));
+    }
+    
+    function updateComment(event) {
+        console.log(event.target);
     }
     
 });

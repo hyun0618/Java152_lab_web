@@ -1,9 +1,5 @@
 package com.itwill.springboot5.web;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -20,7 +16,6 @@ import com.itwill.springboot5.dto.PostSearchRequestDto;
 import com.itwill.springboot5.dto.PostUpdateDto;
 import com.itwill.springboot5.service.PostService;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,107 +23,70 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller @RequestMapping("/post")
 public class PostController {
-	
-	private final PostService postSvc;
-	
-	@GetMapping("/list")
+    
+    private final PostService postSvc;
+
+    @GetMapping("/list")
     public void list(@RequestParam(name = "p", defaultValue = "0") int pageNo, Model model) {
-        log.info("list(pageNo={})", pageNo);      
+        log.info("list(pageNo={})", pageNo);
         
         // 서비스 계층의 메서드를 호출 -> 뷰에 포스트 목록 전달
-        Page<PostListItemDto> list = postSvc.read(pageNo, Sort.by("modifiedTime").descending());
+        Page<PostListItemDto> list = postSvc.read(pageNo, Sort.by("id").descending());
         model.addAttribute("page", list);
         
         // pagination fragment에서 사용하기 위한 현재 요청 주소 정보
         model.addAttribute("baseUrl", "/post/list");
+    }
+    
+    @GetMapping("/create")
+    public void create() {
+        log.info("create() GET");
+    }
+    
+    @PostMapping("/create")
+    public String create(PostCreateDto dto) {
+        log.info("POST create(dto={})", dto);
         
-	}
-	
-//	@GetMapping("/list")
-//	public void list(Model model) {		
-//		log.info("list()");
-//		// 서비스 계층의 메서드를 호출 --> 뷰에 포스트 목록 전달 
-//		List<PostListItemDto> list = postSvc.read();
-//		model.addAttribute("posts", list);
-//	}
-	
-	@GetMapping("/create")
-	public void create() {
-		
-	}
-	
-	@PostMapping("/create")
-	public String create(PostCreateDto dto) {
-		log.info("POST create(dto={})", dto);
-		
-		// 서비스 계층의 메서드를 호출해서 작성한 포스트를 DB에 저장.
-		postSvc.create(dto);
-	        
-		return "redirect:/post/list";
-	}
-	 
-//	@PostMapping("/create")
-//	public String save(@RequestParam String title, @RequestParam String content, @RequestParam String author) {
-//		PostCreateDto dto = new PostCreateDto();
-//		dto.setTitle(title);
-//		dto.setContent(content);
-//		dto.setAuthor(author);
-//		postSvc.create(dto);
-//		return "redirect:/post/list";
-//	}
-	
-	@GetMapping({ "/details", "/modify" })	
-	public void details(@RequestParam Long id, Model model) {
-		Post entity = postSvc.read(id);
-		model.addAttribute("post", entity);
-		 
-		// --> view의 이름은 요청 주소가 "details"인 경우에는 details.html
-		// 요청주소가 "modify"인 경우에는 modify.html
-	 }
-	  
-//	@GetMapping("/details/{id}")	
-//	public String list(@PathVariable Long id, Model model) {
-//		Post post = postSvc.read(id);
-//		model.addAttribute("post", post);
-//		return "post/details";
-//	 }
-	 
-	@GetMapping("/delete")
-	public String delete(@RequestParam Long id) {
-		postSvc.delete(id);
-		return "redirect:/post/list"; 
-	}
-	 
-	@PostMapping("/update")
-	public String update(PostUpdateDto dto) {
-		postSvc.update(dto);
-		return "redirect:/post/details?id=" + dto.getId(); 
-	}
-	
-	// 클라이언트가 Dispatcher Servlet에 요청.(req.getParameter)
-	// Dispatcher Servlet이 컨트롤러의 메서드를 호출.(아규먼트 전달)
-	
-//	@GetMapping("/search")  
-//	public String search(PostSearchRequestDto dto, Model model) {
-//		log.info("search(dto={})", dto);
-//		
-//		// 페이지 요청 생성
-////		Sort sort = Sort.by(Sort.Direction.DESC, "modifiedTime");
-////	    Page<PostListItemDto> result = postSvc.search(dto, sort);
-//
-//		Page<PostListItemDto> result = postSvc.search(dto, Sort.by("modifiedTime").descending());
-//	    model.addAttribute("posts", result.getContent());
-//	    model.addAttribute("page", result);
-//
-//	    return "post/list";
-//	    
-//	}
-	
-	@GetMapping("/search")
+        // 서비스 계층의 메서드를 호출해서 작성한 포스트를 DB에 저장.
+        postSvc.create(dto);
+        
+        return "redirect:/post/list";
+    }
+    
+    @GetMapping({ "/details", "/modify" })
+    public void details(@RequestParam(name = "id") Long id, Model model) {
+        log.info("details(id={})", id);
+        
+        Post entity = postSvc.read(id);
+        model.addAttribute("post", entity);
+        
+        //-> view 이름은, 요청 주소가 "details"인 경우에는 details.html
+        // 요청 주소가 "modify"인 경우에는 modify.html
+    }
+    
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") Long id) {
+        log.info("delete(id={})", id);
+        
+        postSvc.delete(id);
+        
+        return "redirect:/post/list";
+    }
+    
+    @PostMapping("/update")
+    public String update(PostUpdateDto dto) {
+        log.info("update(dto={})", dto);
+        
+        postSvc.update(dto);
+        
+        return "redirect:/post/details?id=" + dto.getId();
+    }
+    
+    @GetMapping("/search")
     public String search(PostSearchRequestDto dto, Model model) {
         log.info("search(dto={})", dto);
         
-        Page<PostListItemDto> result = postSvc.search(dto, Sort.by("modifiedTime").descending());
+        Page<PostListItemDto> result = postSvc.search(dto, Sort.by("id").descending());
         model.addAttribute("page", result);
         
         // pagination fragment에서 사용할 현재 요청 주소 정보
@@ -136,5 +94,5 @@ public class PostController {
         
         return "post/list";
     }
-
+    
 }

@@ -2,6 +2,7 @@ package com.itwill.springboot5.web;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +26,8 @@ public class CommentController {
 	
 	private final CommentService commentSvc;
 	
-	@PostMapping // requestparam, requestbody, pathvariable
-	public ResponseEntity<Comment> registerComment(@RequestBody CommentRegisterDto dto) { 
+	@PostMapping 
+	public ResponseEntity<Comment> registerComment(@RequestBody CommentRegisterDto dto) { // requestparam, requestbody, pathvariable 
 		log.info("registerComment(dto = {})", dto);
 		
 		// 서비스 계층의 메서드 호출(댓글 등록 서비스 실행)
@@ -46,6 +47,15 @@ public class CommentController {
 		
 		return ResponseEntity.ok(data);
 	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Long> deleteComment(@PathVariable Long id) {
+		log.info("deleteComment(id={})", id);
+		
+		commentSvc.delete(id);
+		
+		return ResponseEntity.ok(id); // 삭제한 댓글 아이디를 응답으로 보내기 위해 Long 타입으로 선언.
+ 	}
 	
 	
 }

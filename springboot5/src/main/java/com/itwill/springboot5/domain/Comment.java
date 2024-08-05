@@ -19,31 +19,22 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder
-@Getter @ToString(callSuper = true) // --> log.info("save 결과: {}", entity); 에서 시간 출력.
+@Getter @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity @Table(name = "COMMENTS")
 public class Comment extends BaseTimeEntity {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@ToString.Exclude // toString 메서드를 만들 때 제외.
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "POST_ID") // FK 제약조건이 있는 컬럼 이름. 
-	private Post post;
-	
-	@Basic(optional = false)
-	private String ctext;
-	
-	@Basic(optional = false)
-	private String writer;
-	
-	public Comment update(String ctext, String writer) {
-		this.ctext = ctext;
-		this.writer = writer;
-		
-		return this;				
-	}
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @ToString.Exclude // toString 메서드를 만들 때 제외시킴.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "POST_ID") // FK 제약조건이 있는 컬럼 이름.
+    private Post post;
+    
+    @Basic(optional = false)
+    private String ctext;
+    
+    @Basic(optional = false)
+    private String writer;
 }

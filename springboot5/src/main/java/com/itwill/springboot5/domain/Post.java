@@ -41,8 +41,9 @@ public class Post extends BaseTimeEntity {
 	@Basic(optional = false)
 	private String author;
 	
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Comment> comments;
+//	@ToString.Exclude
+//	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Comment> comments;
 
 	// update 기능(제목/내용 수정)에서 사용할 공개 메서드
 	public Post update(String title, String content) {
