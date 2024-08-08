@@ -115,6 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function makeCommentElements(data, pageNo) {
+        // 로그인 사용자 정보 --> 댓글  삭제/업데이트 버튼 여부 결정.
+        const authUser = document.querySelector('span#authenticatedUser').innerText;
+//        console.log(`authUser = ${authUser}`);
+        
         // 댓글 목록을 추가할 div 요소 
         const divComments = document.querySelector('div#divComments');
         
@@ -132,14 +136,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="mt-2 col-9">
                             <textarea class="commentText form-control" data-id="${comment.id}">${comment.ctext} </textarea> 
                         </div>
-                        <div class="mt-2 col-3">
-                            <button class="btnDelete btn btn-outline-danger btn-sm" data-id="${comment.id}">삭제</button>
-                            <button class="mx-2 btnUpdate btn btn-outline-primary btn-sm" data-id="${comment.id}">수정</button>
+            `;
+            // 로그인 사용자와 댓글 작성자가 같은 경우에만 삭제/수정 버튼이 보임.
+            if (authUser === comment.writer) {
+                htmlStr += `                   
+                            <div class="mt-2 col-3">
+                                <button class="btnDelete btn btn-outline-danger btn-sm" data-id="${comment.id}">삭제</button>
+                                <button class="mx-2 btnUpdate btn btn-outline-primary btn-sm" data-id="${comment.id}">수정</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            `;
+                `;
+            } else {
+                htmlStr += `
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
         }
         
         if (pageNo === 0) {

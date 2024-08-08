@@ -36,8 +36,8 @@ dependencies {
 	// <--------------------
 	
 	// Spring Security ----->
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 필수
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 필수
 	testImplementation 'org.springframework.security:spring-security-test'
 	// <--------------------
 	
