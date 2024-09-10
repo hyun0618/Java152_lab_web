@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <textarea class="commentText form-control" data-id="${comment.id}">${comment.ctext} </textarea> 
                         </div>
             `;
+            
             // 로그인 사용자와 댓글 작성자가 같은 경우에만 삭제/수정 버튼이 보임.
             if (authUser === comment.writer) {
                 htmlStr += `                   

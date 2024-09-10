@@ -37,7 +37,8 @@ public class PostDetailsController extends HttpServlet {
 		req.setAttribute("post", post);
 		
 		// 뷰로 이동(forward)
-		req.getRequestDispatcher("/WEB-INF/views/post/details.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/post/details.jsp")
+			.forward(req, resp);
 	}
 	
 }

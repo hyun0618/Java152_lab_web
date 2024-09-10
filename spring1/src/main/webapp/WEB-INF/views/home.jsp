@@ -16,6 +16,12 @@
     <header>
         <h1>Home</h1>
         <h2>${now}</h2>
+        
+        <!-- <img alt="뉴욕" src="/spring1/images/newyork.jpg"> '서버에 대한 상대경로' -->
+        <!-- <img alt="뉴욕" src="./images/newyork.jpg" /> '현재 주소에서의 상대경로' -->
+        <c:url var="newyork" value="/images/newyork.jpg" />
+        <img alt="뉴욕" src="${newyork}" />
+        <!-- <img src="http://localhost:8080/spring1/images/newyork.jpg" /> '절대경로' -->
     </header>
     
     <main>
@@ -37,6 +43,22 @@
                 <li>
                     <c:url var="redirectPage" value="/test3" />
                     <a href="${redirectPage}">리다이렉트</a>
+                </li>
+                <li>
+                    <c:url var="rest1" value="/rest1" />
+                    <a href="${rest1}">REST 1</a>
+                </li>
+                <li>
+                    <c:url var="rest2" value="/rest2" />
+                    <a href="${rest2}">REST 2</a>
+                </li>
+                <li>
+                    <c:url var="rest3" value="/rest3" />
+                    <a href="${rest3}">REST Controller 3</a>
+                </li>
+                <li>
+                    <c:url var="rest4" value="/rest4" />
+                    <a href="${rest4}">REST Controller 4</a>
                 </li>
             </ul>
         </nav>

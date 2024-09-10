@@ -19,6 +19,8 @@
         
         <main>
             <div class="card mt-2">
+            
+                <!-- 검색창 -->
                 <div class="card-header">
                     <c:url var="postSearchPage" value="/post/search"  />
                     <form method="get" action="${postSearchPage}">
@@ -42,6 +44,8 @@
                         </div>
                     </form>
                 </div>
+                
+                <!-- 포스트 리스트 -->
                 <div class="card-body">
                     <table class="table table-striped table-hover">
                         <thead>

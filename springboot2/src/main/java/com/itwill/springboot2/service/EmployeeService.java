@@ -26,8 +26,8 @@ public class EmployeeService {
 	}
 	
 	public Employee read(Integer id) {
-		return empRepo.findById(id).orElseThrow();
 		
+		return empRepo.findById(id).orElseThrow();
 	}
 	
 }

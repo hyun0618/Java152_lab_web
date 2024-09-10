@@ -62,7 +62,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous"></script>
     
-    <%-- body 끝에서 작성(!순서 중요!) --%>
+    <%-- body 끝에서 작성(!순서 중요! 이벤트리스너들은 요소들이) --%>
     <c:url var="post_modify_js" value="/js/post_modify.js" />
     <script src="${post_modify_js}"></script>
     

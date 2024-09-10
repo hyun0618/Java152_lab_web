@@ -30,20 +30,6 @@ public enum PostService {
 		return list;
 	}
 	
-	public int create(Post post) {
-		log.debug("create(post={})", post);
-		
-		// Repository 계층의 메서드를 사용해서 DB 테이블에 행을 삽입(insert)
-		int result = postDao.insert(post);
-		log.debug("insert result = {}", result);
-		
-		// UserDao 메서드 호출(USERES 테이블의 POINTS 컬럼 업데이트)
-		// 글 작성자에게 10포인트를 줌.
-		userDao.updatePoints(post.getAuthor(), 10);
-	   
-		return result; // 'insert'된 행의 개수를 리턴.
-	}
-	
 	public Post read(int id) {
 		log.debug("read(id={})", id);
 		
@@ -71,6 +57,20 @@ public enum PostService {
 		log.debug("update result = {}", result);
 		
 		return result;
+	}
+	
+	public int create(Post post) {
+		log.debug("create(post={})", post);
+		
+		// Repository 계층의 메서드를 사용해서 DB 테이블에 행을 삽입(insert)
+		int result = postDao.insert(post);
+		log.debug("insert result = {}", result);
+		
+		// UserDao 메서드 호출(USERES 테이블의 POINTS 컬럼 업데이트)
+		// 글 작성자에게 10포인트를 줌.
+		userDao.updatePoints(post.getAuthor(), 10);
+	   
+		return result; // 'insert'된 행의 개수를 리턴.
 	}
 	
 	

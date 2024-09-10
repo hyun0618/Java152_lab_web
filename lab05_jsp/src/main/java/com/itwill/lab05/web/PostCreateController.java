@@ -56,6 +56,7 @@ public class PostCreateController extends HttpServlet {
 		// 포스트 목록 페이지로 이동.
 		String url = req.getContextPath() + "/post/list" ;
 		log.debug("redirect: " + url);
+		
 		resp.sendRedirect(url); // PRG(Post-Redirect-Get)
 		
 	}
